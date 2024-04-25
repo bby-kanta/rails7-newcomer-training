@@ -13,3 +13,118 @@
  *= require_tree .
  *= require_self
  */
+pageTitle {
+    color: rgb(0, 102, 255); 
+    font-size: 50pt;
+    /* font-family: "fantasy"; */
+}
+
+h1 {
+    color: rgb(6, 195, 113); 
+    font-size: 25pt;
+}
+
+h2 {
+    color: rgb(184, 5, 255); 
+    font-size: 25pt;
+}
+
+.nav-link {
+    font-size: 0.8rem;
+  }
+ 
+.buttonArray{
+    display: flex;
+}
+
+.box1{
+    width:100px;
+    height:50px;
+    background:gold;
+    border-radius:10px;
+  }
+
+.btn_01 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 25pt;
+    /* padding: 20px 20px 20px 75px; */
+    background-color: #07ffa8;
+    /* border: 2px solid #07ffa8; */
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .btn_02 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 25pt;
+    /* padding: 20px 20px 20px 75px; */
+    background-color: #0e98e2;
+    /* border: 2px solid #07ffa8; */
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+.btn_03 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 25pt;
+    /* padding: 20px 20px 20px 75px; */
+    background-color: #ed0707;
+    /* border: 2px solid #07ffa8; */
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_04 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 40pt;
+    /* padding: 20px 20px 20px 75px; */
+    background-color: #fd6703;
+    /* border: 2px solid #07ffa8; */
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_05 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 40pt;
+    /* padding: 20px 20px 20px 75px; */
+    background-color: #000000;
+    /* border: 2px solid #07ffa8; */
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
