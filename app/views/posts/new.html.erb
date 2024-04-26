@@ -1,13 +1,15 @@
+<div>
 <h1>新規投稿</h1>
-<!-- form_for部分 -->
+<%= @user %>
+
 <%= form_for(@post) do |f| %>
- 
-    <h4>タイトル</h4>
-    <%= f.text_field :title %>
- 
+
     <h4>本文</h4>
     <%= f.text_area :body %>
- 
-    <%= f.submit '投稿' %>
+    
+    
+    
+    <%= f.submit '投稿', class: "btn_05"%>
  
 <% end %>
+</div>
