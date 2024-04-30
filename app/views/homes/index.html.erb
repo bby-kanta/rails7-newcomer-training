@@ -17,15 +17,20 @@
     <%= link_to 'Log in', new_user_session_path, class: "btn_02" %>
 
 <% end %>
+
 </div>
 
+&ensp;
+
 <div>
+<%= link_to 'New post', "posts/new", class: "btn_05" %>
+
 &ensp;
 <h1>投稿一覧</h1>
 
  <% @posts.each do |post| %>
     <p>タイトル</p>
-    <span><%= post.title %></span>
+    <span><%= post.body %></span>
  <% end %>
  </div> 
 
