@@ -1,0 +1,17 @@
+<div>
+
+<h1>投稿詳細</h1>
+
+<h2>本文</h2>
+
+<div class="buttonArray">
+
+<p><%= @post.body %></p>
+&ensp;
+<%= link_to "編集", edit_post_path(@post.id), class: "btn_06"%> 
+&ensp;
+<%= link_to "削除", post_path(@post.id), data: { "turbo-method": :delete, "turbo-confirm": "削除しますか？" }, class: "btn_07" %>
+
+</div>
+
+</div>

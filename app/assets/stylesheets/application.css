@@ -128,3 +128,39 @@ h2 {
     box-sizing: border-box;
     position: relative;
 }
+
+.btn_06 {
+    display: flex;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #838383;
+    text-align: center;
+    /* width: 40pt;
+    height: 30pt; */
+    /* padding: 20px 20px 20px 75px; */
+    /* background-color: #ffffff; */
+    /* border: 2px solid #07ffa8; */
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_07 {
+    display: flex;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #ff0000;
+    text-align: center;
+    /* width: 40pt;
+    height: 30pt; */
+    /* padding: 20px 20px 20px 75px; */
+    /* background-color: #ffffff; */
+    /* border: 2px solid #07ffa8; */
+    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+}

@@ -24,14 +24,21 @@
 
 <div>
 <%= link_to 'New post', "posts/new", class: "btn_05" %>
+</div>
 
 &ensp;
+
 <h1>投稿一覧</h1>
 
  <% @posts.each do |post| %>
-    <p>タイトル</p>
-    <span><%= post.body %></span>
+ <br>
+    &ensp;
+    <span>
+        <div class="buttonArray">
+            <%= post.body %>
+            &ensp;
+            <%= link_to '詳細', post_path(post.id), class: "btn_06" %>
+        </div>
+    </span>
  <% end %>
  </div> 
-
- </div>
