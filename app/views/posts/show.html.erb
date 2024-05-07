@@ -10,7 +10,7 @@
 &ensp;
 <%= link_to "編集", edit_post_path(@post.id), class: "btn_06"%> 
 &ensp;
-<%= button_to "削除", post_path(@post.id), method: :delete, data: { turbo_confirm: "削除しますか？" }, class: "btn_07" %> 
+<%= link_to "削除", post_path(@post.id), data: { "turbo-method": :delete, "turbo-confirm": "削除しますか？" }, class: "btn_07" %>
 
 </div>
 
