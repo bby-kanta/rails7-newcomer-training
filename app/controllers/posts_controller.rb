@@ -1,14 +1,11 @@
 class PostsController < ApplicationController
-    # before_action :move_to_index #ここを追加で記述
     before_action :authenticate_user!
 
     def index
-        
     end
 
     def new
         @post = Post.new
-        
     end
 
     def show
