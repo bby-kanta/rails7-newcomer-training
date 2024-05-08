@@ -1,0 +1,20 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <%= link_to "Rails7 Newcomer Training Web Application", root_path, style: 'font-size: 75px; font-family:"Comic Sans MS";', id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "Home", root_path %></li>
+        <div class="buttonArray">
+            <% if user_signed_in? %>
+                <%= link_to 'Log out', destroy_user_session_path, data: { turbo_method: :delete }, class: "btn_03" %>
+            <% else %>
+                &ensp;
+                <%= link_to 'Sing up', new_user_registration_path, class: "btn_01" %>
+                &ensp;
+                <%= link_to 'Log in', new_user_session_path, class: "btn_02" %>
+            <% end %>
+        </div>
+      </ul>
+    </nav>
+  </div>
+</header>

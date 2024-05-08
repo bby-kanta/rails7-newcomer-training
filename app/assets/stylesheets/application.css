@@ -16,7 +16,6 @@
 pageTitle {
     color: rgb(0, 102, 255); 
     font-size: 50pt;
-    /* font-family: "fantasy"; */
 }
 
 h1 {
@@ -41,11 +40,11 @@ h2 {
     width:100px;
     height:50px;
     background:gold;
-    border-radius:10px;
   }
 
 .btn_01 {
     display: flex;
+    border-radius: 5px;
     justify-content: center;
     align-items: center;
     color: #ffffff;
@@ -53,16 +52,14 @@ h2 {
     text-decoration: none;
     width: 100pt;
     height: 25pt;
-    /* padding: 20px 20px 20px 75px; */
     background-color: #07ffa8;
-    /* border: 2px solid #07ffa8; */
-    border-radius: 10px;
     box-sizing: border-box;
     position: relative;
   }
 
   .btn_02 {
     display: flex;
+    border-radius: 5px;
     justify-content: center;
     align-items: center;
     color: #ffffff;
@@ -70,16 +67,14 @@ h2 {
     text-decoration: none;
     width: 100pt;
     height: 25pt;
-    /* padding: 20px 20px 20px 75px; */
     background-color: #0e98e2;
-    /* border: 2px solid #07ffa8; */
-    border-radius: 10px;
     box-sizing: border-box;
     position: relative;
   }
 
 .btn_03 {
     display: flex;
+    border-radius: 5px;
     justify-content: center;
     align-items: center;
     color: #ffffff;
@@ -87,16 +82,14 @@ h2 {
     text-decoration: none;
     width: 100pt;
     height: 25pt;
-    /* padding: 20px 20px 20px 75px; */
     background-color: #ed0707;
-    /* border: 2px solid #07ffa8; */
-    border-radius: 10px;
     box-sizing: border-box;
     position: relative;
 }
 
 .btn_04 {
     display: flex;
+    border-radius: 5px;
     justify-content: center;
     align-items: center;
     color: #ffffff;
@@ -104,27 +97,22 @@ h2 {
     text-decoration: none;
     width: 100pt;
     height: 40pt;
-    /* padding: 20px 20px 20px 75px; */
     background-color: #fd6703;
-    /* border: 2px solid #07ffa8; */
-    border-radius: 10px;
     box-sizing: border-box;
     position: relative;
 }
 
 .btn_05 {
     display: flex;
+    border-radius: 5px;
     justify-content: center;
     align-items: center;
     color: #ffffff;
     text-align: center;
     text-decoration: none;
-    width: 40pt;
+    width: 80pt;
     height: 30pt;
-    /* padding: 20px 20px 20px 75px; */
     background-color: #000000;
-    /* border: 2px solid #07ffa8; */
-    border-radius: 10px;
     box-sizing: border-box;
     position: relative;
 }
@@ -135,14 +123,8 @@ h2 {
     text-underline-offset: 5px;
     justify-content: center;
     align-items: center;
-    color: #838383;
+    color: #0106f9;
     text-align: center;
-    /* width: 40pt;
-    height: 30pt; */
-    /* padding: 20px 20px 20px 75px; */
-    /* background-color: #ffffff; */
-    /* border: 2px solid #07ffa8; */
-    border-radius: 10px;
     box-sizing: border-box;
     position: relative;
 }
@@ -155,12 +137,29 @@ h2 {
     align-items: center;
     color: #ff0000;
     text-align: center;
-    /* width: 40pt;
-    height: 30pt; */
-    /* padding: 20px 20px 20px 75px; */
-    /* background-color: #ffffff; */
-    /* border: 2px solid #07ffa8; */
-    border-radius: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_08 {
+    display: flex;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    justify-content: left;
+    align-items: center;
+    color: #838383;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_09 {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    text-align: center;
     box-sizing: border-box;
     position: relative;
 }
