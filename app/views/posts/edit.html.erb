@@ -4,7 +4,10 @@
 <%= form_for(@post) do |f| %>
     <h2>本文</h2>
     <%= f.text_area :body %>
-    <%= f.submit '保存' %>    
+    <%= f.submit '保存', class: "btn_09"%>    
 <% end %>
+
+&ensp;
+<%= link_to "戻る", post_path(@post.id), class: "btn_08"%> 
 
 </div>
