@@ -14,17 +14,24 @@
 
 &ensp;
 
+<div>
+<%= link_to 'ユーザ一覧はこちら', "users/index", class: "btn_09" %>
+</div>
+
+&ensp;
+
 <h1>投稿一覧</h1>
 
- <% @posts.each do |post| %>
- <br>
-    &ensp;
-    <span>
-        <div class="buttonArray">
-            <%= post.body %>
-            &ensp;
-            <%= link_to '詳細', post_path(post.id), class: "btn_06" %>
-        </div>
-    </span>
- <% end %>
- </div> 
+<% @posts.each do |post| %>
+    <br>
+        &ensp;
+        <span>
+            <div class="buttonArray">
+                <%= post.body %>
+                &ensp;
+                <%= link_to '詳細', post_path(post.id), class: "btn_06" %>
+            </div>
+        </span>
+<% end %>
+
+</div> 

@@ -7,10 +7,12 @@
 <div class="buttonArray">
 
 <p><%= @post.body %></p>
-&ensp;
-<%= link_to "編集", edit_post_path(@post.id), class: "btn_06"%> 
-&ensp;
-<%= link_to "削除", post_path(@post.id), data: { "turbo-method": :delete, "turbo-confirm": "削除しますか？" }, class: "btn_07" %>
+<% if user_signed_in? && current_user.id == @post.user_id %>
+    &ensp;
+    <%= link_to "編集", edit_post_path(@post.id), class: "btn_06"%> 
+    &ensp;
+    <%= link_to "削除", post_path(@post.id), data: { "turbo-method": :delete, "turbo-confirm": "削除しますか？" }, class: "btn_07" %>
+<% end %>
 
 </div>
 
