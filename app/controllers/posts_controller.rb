@@ -31,12 +31,22 @@ class PostsController < ApplicationController
     end
 
     def update
+        if current_user == Post.find(params[:id]).user || current_user.try(:admin?)
+            @post = Post.find(params[:id])
+        else
+            redirect_to root_path
+        end
         post = Post.find(params[:id])
         post.update(post_params)
         redirect_to post_path(post.id)
     end
 
     def destroy
+        if current_user == Post.find(params[:id]).user || current_user.try(:admin?)
+            @post = Post.find(params[:id])
+        else
+            redirect_to root_path
+        end
         post = Post.find(params[:id])
         post.destroy
         redirect_to "/homes"
