@@ -1,0 +1,25 @@
+<div>
+
+<div class="left">
+<%= link_to "戻る", "/users/index", class: "btn_08"%> 
+</div>
+
+<h1>ユーザ詳細</h1>
+
+<p><%= @user.email %></p>
+
+<h2>このユーザの投稿一覧</h2>
+
+<% @posts.each do |post| %>
+    <br>
+        &ensp;
+        <span>
+            <div class="buttonArray">
+                <%= post.body %>
+                &ensp;
+                <%= link_to '詳細', post_path(post.id), class: "btn_06" %>
+            </div>
+        </span>
+<% end %>
+
+</div>
