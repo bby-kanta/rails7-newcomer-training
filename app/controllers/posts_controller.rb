@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
-    before_action :authenticate_user!
-
+    before_action :authenticate_user! 
+    before_action :user_check, only: [:edit, :update, :destroy]
+    
     def index
     end
 
@@ -23,30 +24,15 @@ class PostsController < ApplicationController
     end
 
     def edit
-        if current_user == Post.find(params[:id]).user || current_user.try(:admin?)
-            @post = Post.find(params[:id])
-        else
-            redirect_to root_path
-        end
     end
 
     def update
-        if current_user == Post.find(params[:id]).user || current_user.try(:admin?)
-            @post = Post.find(params[:id])
-        else
-            redirect_to root_path
-        end
         post = Post.find(params[:id])
         post.update(post_params)
         redirect_to post_path(post.id)
     end
 
     def destroy
-        if current_user == Post.find(params[:id]).user || current_user.try(:admin?)
-            @post = Post.find(params[:id])
-        else
-            redirect_to root_path
-        end
         post = Post.find(params[:id])
         post.destroy
         redirect_to "/homes"
@@ -55,5 +41,13 @@ class PostsController < ApplicationController
     private
     def post_params
         params.require(:post).permit(:user_id, :body)
+    end
+
+    def user_check
+        if current_user == Post.find(params[:id]).user || current_user.try(:admin?)
+            @post = Post.find(params[:id])
+        else
+            redirect_to root_path
+        end
     end
 end
