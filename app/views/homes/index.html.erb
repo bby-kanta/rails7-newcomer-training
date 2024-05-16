@@ -22,16 +22,7 @@
 
 <h1>投稿一覧</h1>
 
-<% @posts.each do |post| %>
-    <br>
-        &ensp;
-        <span>
-            <div class="buttonArray">
-                <%= post.body %>
-                &ensp;
-                <%= link_to '詳細', post_path(post.id), class: "btn_06" %>
-            </div>
-        </span>
-<% end %>
+&ensp;
+<%= render "posts/overview", posts: @posts%>
 
 </div> 

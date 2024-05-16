@@ -1,0 +1,12 @@
+<% posts.each do |post| %>
+    <br>
+        &ensp;
+        <span>
+            <div class="buttonArray">
+                <%= post.body %>
+                <%= render "favorites/btn", post: post%>
+                &ensp;
+                <%= link_to '詳細', post_path(post.id), class: "btn_06" %>
+            </div>
+        </span>
+<% end %>
