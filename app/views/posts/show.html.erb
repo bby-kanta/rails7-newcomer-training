@@ -1,5 +1,10 @@
 <div>
 
+&ensp;
+<div class="left">
+<%= link_to "戻る", root_path, class: "btn_08"%> 
+</div>
+
 <h1>投稿詳細</h1>
 
 <h2>本文</h2>
@@ -8,7 +13,7 @@
 
 <p><%= @post.body %></p>
 <% if user_signed_in? && current_user.id == @post.user_id %>
-    <%= render "favorites/btn"%>
+    <%= render "favorites/btn", post: @post%>
     &ensp;
     <%= link_to "編集", edit_post_path(@post.id), class: "btn_06"%> 
     &ensp;
@@ -17,9 +22,6 @@
 
 </div>
 
-&ensp;
-<div class="left">
-<%= link_to "戻る", root_path, class: "btn_08"%> 
-</div>
+<h2>この投稿をいいねしたユーザ</h2>
 
 </div>

@@ -1,9 +1,12 @@
 <% posts.each do |post| %>
     <br>
         &ensp;
+        <b>投稿者: <%= post.user.email %></b>
         <span>
             <div class="buttonArray">
+                
                 <%= post.body %>
+                &ensp;
                 <%= render "favorites/btn", post: post%>
                 &ensp;
                 <%= link_to '詳細', post_path(post.id), class: "btn_06" %>
