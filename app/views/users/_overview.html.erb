@@ -1,0 +1,12 @@
+<% users.each do |user| %>
+    <br>
+        &ensp;
+        <span>
+            <div class="buttonArray">
+                <%= user.id %>
+                <%= user.email %>
+                &ensp;
+                <%= link_to 'ユーザ詳細',  user_path(user.id), class: "btn_06" %>
+            </div>
+        </span>
+<% end %>

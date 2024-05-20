@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get "users/index", to: "users#index"
   get "users/:id", to: "users#show", as: "user"
 
+  resource :favorites, only: [:create, :destroy]
+  
   # Defines the root path route ("/")
   # root "posts#index"
 end
