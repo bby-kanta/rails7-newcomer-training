@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   resource :favorites, only: [:create, :destroy]
   
   resource :relationships, only: [:create, :destroy]
-  get "followings" => "relationships#followings", as: "followings"
-  get "followers" => "relationships#followers", as: "followers"
+  get "followings/:user_id", to: "relationships#followings", as: "followings"
+  get "followers/:user_id", to: "relationships#followers", as: "followers"
   
   # Defines the root path route ("/")
   # root "posts#index"
