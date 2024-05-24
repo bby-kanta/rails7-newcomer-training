@@ -7,6 +7,9 @@
 
 <h1>投稿詳細</h1>
 
+<h2>投稿者</h2>
+<%= @post.user.email%>
+
 <h2>本文</h2>
 
 <div class="buttonArray">
@@ -23,5 +26,6 @@
 </div>
 
 <h2>この投稿をいいねしたユーザ</h2>
+<%= render "users/overview", users: @users_favorite%>
 
 </div>

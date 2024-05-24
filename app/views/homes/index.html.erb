@@ -20,9 +20,20 @@
 
 &ensp;
 
-<h1>投稿一覧</h1>
+<div class="buttonArray">
 
+<div>
+<h1>投稿一覧</h1>
 &ensp;
 <%= render "posts/overview", posts: @posts%>
+</div>
+
+<div>
+<h1>フォローユーザの投稿一覧</h1>
+&ensp;
+<%= render "posts/overview", posts: @posts_following%>
+</div>
+
+</div>
 
 </div> 
