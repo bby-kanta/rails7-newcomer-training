@@ -15,8 +15,10 @@
 <div class="buttonArray">
 
 <p><%= @post.body %></p>
+<%= render "favorites/btn", post: @post%>
+&ensp;
+<%= render "retweets/btn", post: @post%>
 <% if user_signed_in? && current_user.id == @post.user_id %>
-    <%= render "favorites/btn", post: @post%>
     &ensp;
     <%= link_to "編集", edit_post_path(@post.id), class: "btn_06"%> 
     &ensp;
@@ -27,5 +29,8 @@
 
 <h2>この投稿をいいねしたユーザ</h2>
 <%= render "users/overview", users: @users_favorite%>
+
+<h2>この投稿をリツイートしたユーザ</h2>
+<%= render "users/overview", users: @users_retweet%>
 
 </div>

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "users/:id", to: "users#show", as: "user"
 
   resource :favorites, only: [:create, :destroy]
+  resource :retweets, only: [:create, :destroy]
   
   resource :relationships, only: [:create, :destroy]
   get "followings/:user_id", to: "relationships#followings", as: "followings"
