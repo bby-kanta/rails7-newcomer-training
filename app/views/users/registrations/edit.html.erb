@@ -30,6 +30,11 @@
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
+  
+  <div class="field">
+    <%= f.check_box :private %>
+    <%= f.label :private, "鍵アカウント（非公開）にする" %>
+  </div>
 
   <div class="actions">
     <%= f.submit "Update" %>

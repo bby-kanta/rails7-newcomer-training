@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get "followings/:user_id", to: "relationships#followings", as: "followings"
   get "followers/:user_id", to: "relationships#followers", as: "followers"
   
+  resources :follow_requests, only: [:index, :create, :destroy]
+  
   # Defines the root path route ("/")
   # root "posts#index"
 end

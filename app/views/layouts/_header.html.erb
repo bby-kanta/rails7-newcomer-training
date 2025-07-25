@@ -10,6 +10,10 @@
               <div>
                 You loged in as <b><%= current_user.email%></b>
                 &ensp;
+                <% if current_user.received_follow_requests.any? %>
+                  <%= link_to "フォローリクエスト(#{current_user.received_follow_requests.count})", follow_requests_path, class: "btn btn-warning" %>
+                  &ensp;
+                <% end %>
                 <%= link_to 'Log out', destroy_user_session_path, data: { turbo_method: :delete }, class: "btn_03" %>
               </div>
             <% else %>

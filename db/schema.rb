@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_25_162636) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_25_164725) do
   create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "post_id", null: false
@@ -19,6 +19,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_25_162636) do
     t.index ["post_id"], name: "index_favorites_on_post_id"
     t.index ["user_id", "post_id"], name: "index_favorites_on_user_id_and_post_id", unique: true
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "follow_requests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "follower_id", null: false
+    t.bigint "followed_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["followed_id"], name: "index_follow_requests_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_follow_requests_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_follow_requests_on_follower_id"
   end
 
   create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -57,12 +67,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_25_162636) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "private", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "favorites", "posts"
   add_foreign_key "favorites", "users"
+  add_foreign_key "follow_requests", "users", column: "followed_id"
+  add_foreign_key "follow_requests", "users", column: "follower_id"
   add_foreign_key "posts", "users"
   add_foreign_key "relationships", "users", column: "followed_id"
   add_foreign_key "relationships", "users", column: "follower_id"
