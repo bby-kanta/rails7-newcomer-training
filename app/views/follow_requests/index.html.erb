@@ -1,0 +1,19 @@
+<h1>フォローリクエスト</h1>
+
+<% if @follow_requests.any? %>
+  <% @follow_requests.each do |request| %>
+    <div class="mb-3 p-3 border rounded">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <%= link_to request.follower.email, user_path(request.follower) %>
+        </div>
+        <div>
+          <%= link_to "承認", follow_request_path(request, approve: true), data: { turbo_method: :post }, class: "btn btn-success btn-sm" %>
+          <%= link_to "拒否", follow_request_path(request), data: { turbo_method: :delete }, class: "btn btn-danger btn-sm" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>フォローリクエストはありません</p>
+<% end %>

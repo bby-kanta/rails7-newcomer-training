@@ -8,12 +8,19 @@
 
 <p><%= @user.email %></p>
 
-<h2>このユーザの投稿一覧</h2>
+<% if @user.private? && current_user != @user && !current_user&.following?(@user) %>
+  <div class="alert alert-info">
+    <p>🔒 このアカウントは非公開です</p>
+    <p>投稿を見るにはフォローリクエストを送信してください。</p>
+  </div>
+<% else %>
+  <h2>このユーザの投稿一覧</h2>
 
-&ensp;
-<%= render "posts/overview", posts: @posts%>
+  &ensp;
+  <%= render "posts/overview", posts: @posts%>
 
-<h2>このユーザがいいねした投稿一覧</h2>
-<%= render "posts/overview", posts: @favorite_posts%>
+  <h2>このユーザがいいねした投稿一覧</h2>
+  <%= render "posts/overview", posts: @favorite_posts%>
+<% end %>
 
 </div>
