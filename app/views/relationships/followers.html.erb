@@ -1,0 +1,14 @@
+<div>
+
+<div class="left">
+<%= link_to "戻る", "/users/index", class: "btn_08"%> 
+</div>
+
+<h1>Follower Users of <b><%= @user.email %></b></h1>
+<% if @users.exists? %>
+  <%= render "users/overview", users: @users %>
+<% else %>
+  <p>ユーザーはいません</p>
+<% end %>
+
+</div>

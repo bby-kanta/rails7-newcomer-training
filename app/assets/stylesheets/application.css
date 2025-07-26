@@ -13,3 +13,153 @@
  *= require_tree .
  *= require_self
  */
+pageTitle {
+    color: rgb(0, 102, 255); 
+    font-size: 50pt;
+}
+
+h1 {
+    color: rgb(6, 195, 113); 
+    font-size: 25pt;
+}
+
+h2 {
+    color: rgb(184, 5, 255); 
+    font-size: 25pt;
+}
+
+.nav-link {
+    font-size: 0.8rem;
+  }
+ 
+.buttonArray{
+    display: flex;
+}
+
+.box1{
+    width:100px;
+    height:50px;
+    background:gold;
+  }
+
+.btn_01 {
+    display: flex;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 25pt;
+    background-color: #07ffa8;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .btn_02 {
+    display: flex;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 25pt;
+    background-color: #0e98e2;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+.btn_03 {
+    display: flex;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 25pt;
+    background-color: #ed0707;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_04 {
+    display: flex;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 100pt;
+    height: 40pt;
+    background-color: #fd6703;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_05 {
+    display: flex;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    width: 80pt;
+    height: 30pt;
+    background-color: #000000;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_06 {
+    display: flex;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #0106f9;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_07 {
+    display: flex;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #ff0000;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_08 {
+    display: flex;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    justify-content: left;
+    align-items: center;
+    color: #838383;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.btn_09 {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+    text-align: center;
+    box-sizing: border-box;
+    position: relative;
+}

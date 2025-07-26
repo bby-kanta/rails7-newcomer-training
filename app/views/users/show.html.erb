@@ -1,0 +1,19 @@
+<div>
+
+<div class="left">
+<%= link_to "戻る", "/users/index", class: "btn_08"%> 
+</div>
+
+<h1>ユーザ詳細</h1>
+
+<p><%= @user.email %></p>
+
+<h2>このユーザの投稿一覧</h2>
+
+&ensp;
+<%= render "posts/overview", posts: @posts%>
+
+<h2>このユーザがいいねした投稿一覧</h2>
+<%= render "posts/overview", posts: @favorite_posts%>
+
+</div>

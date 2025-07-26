@@ -1,0 +1,36 @@
+<div>
+
+&ensp;
+<div class="left">
+<%= link_to "戻る", root_path, class: "btn_08"%> 
+</div>
+
+<h1>投稿詳細</h1>
+
+<h2>投稿者</h2>
+<%= @post.user.email%>
+
+<h2>本文</h2>
+
+<div class="buttonArray">
+
+<p><%= @post.body %></p>
+<%= render "favorites/btn", post: @post%>
+&ensp;
+<%= render "retweets/btn", post: @post%>
+<% if user_signed_in? && current_user.id == @post.user_id %>
+    &ensp;
+    <%= link_to "編集", edit_post_path(@post.id), class: "btn_06"%> 
+    &ensp;
+    <%= link_to "削除", post_path(@post.id), data: { "turbo-method": :delete, "turbo-confirm": "削除しますか？" }, class: "btn_07" %>
+<% end %>
+
+</div>
+
+<h2>この投稿をいいねしたユーザ</h2>
+<%= render "users/overview", users: @users_favorite%>
+
+<h2>この投稿をリツイートしたユーザ</h2>
+<%= render "users/overview", users: @users_retweet%>
+
+</div>
