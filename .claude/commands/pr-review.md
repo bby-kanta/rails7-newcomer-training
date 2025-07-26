@@ -106,9 +106,13 @@ URLを受け取ったら：
 
 ### 実装の流れ：
 1. まずPR情報を取得して必要な値を抽出
-2. レビューコメントのJSONを正確に作成（エスケープに注意）
-3. GitHub Review APIにPOSTリクエストを送信
-4. エラーが発生した場合は、エラー内容を分析して修正し、再試行
+2. レビューコメントのJSONをWriteツールで作成：
+   - bashのヒアドキュメント（cat > file << EOF）は使用しない
+   - Writeツールで直接JSONオブジェクトを書き込む
+   - 改行は`\n`で表現（`\\n`ではない）
+3. 作成したJSONを`jq .`で検証
+4. GitHub Review APIにPOSTリクエストを送信
+5. エラーが発生した場合は、エラー内容を分析して修正し、再試行
 
 ### 正しいAPI呼び出し例：
 ```bash
@@ -121,21 +125,20 @@ REPO=$(echo $PR_INFO | jq -r '.headRepository.name')
 # リポジトリオーナー情報を取得
 OWNER=$(gh repo view [OWNER/REPO] --json owner --jq '.owner.login')
 
-# JSONファイルを作成（エスケープ問題を回避）
-cat > /tmp/review.json << EOF
+# 重要: JSONファイルの作成にはWriteツールを使用すること（エスケープ問題を回避）
+# 以下のようなJSON構造を/tmp/review.jsonに書き込む：
 {
   "body": "",
   "event": "COMMENT",
-  "commit_id": "$COMMIT_SHA",
+  "commit_id": "[COMMIT_SHA]",
   "comments": [
     {
       "path": "ファイルパス",
       "line": 行番号,
-      "body": "![ラベル](https://img.shields.io/badge/review-ラベル-色.svg)\\n\\nコメント内容"
+      "body": "![ラベル](https://img.shields.io/badge/review-ラベル-色.svg)\n\nコメント内容"
     }
   ]
 }
-EOF
 
 # APIリクエストを送信
 curl -L \
@@ -152,8 +155,9 @@ curl -L \
 - `body`: 空文字列にする（サマリーコメントを避けるため）
 - `path`: Gitリポジトリのルートからの相対パス（例: "app/controllers/favorites_controller.rb"）
 - `line`: 変更された行の番号（diffで+が付いている行の実際の行番号）
-- `body`内の改行: `\\n`でエスケープする
-- JSONはファイルに書き出してから送信（エスケープ問題を回避）
+- `body`内の改行: `\n`を使用（Writeツール使用時は通常の改行として扱われる）
+- **JSONファイルの作成には必ずWriteツールを使用**（bashのヒアドキュメントは避ける）
+- JSONの検証には`jq .`を使用してパースエラーがないか確認
 
 ### レビューラベル対応表：
 | ラベル | 意味 | 色 | URL |
