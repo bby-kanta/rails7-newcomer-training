@@ -3,6 +3,8 @@ class FavoritesController < ApplicationController
     
     def create
         @post = Post.find(params[:post_id])
+        raise StandardError, "Post not found" if @post.nil?
+
         favorite = current_user.favorites.new(post_id: @post.id)
         favorite.save
         redirect_to request.referer
