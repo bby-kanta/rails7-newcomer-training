@@ -53,7 +53,7 @@ URLを受け取ったら：
    以下のレビューコメント案を作成しました：
    「[作成者向けのレビューコメント案]」
    
-   コメントのラベルを選択してください：
+   コメントのラベル：
    - must: 必須修正項目 ![must](https://img.shields.io/badge/review-must-red.svg)
    - imo: 個人的意見 ![imo](https://img.shields.io/badge/review-imo-orange.svg) 
    - ask: 質問 ![ask](https://img.shields.io/badge/review-ask-blue.svg)
@@ -61,12 +61,26 @@ URLを受け取ったら：
    - suggestion: 提案 ![suggestion](https://img.shields.io/badge/review-suggestion-blue.svg)
    
    このコメントで良いですか？
-   - OK [ラベル名]：このコメントを指定ラベルでレビューに追加
-   - 修正：コメント内容を修正
-   - スキップ：コメントなしで次へ
+   
+   次のいずれかを入力してください：
+   - must / imo / ask / nits / suggestion → 該当ラベルでレビューに追加
+   - skip → コメントなしで次へ
+   - edit → コメント内容を修正
+   
+   入力: 
    ```
 
-5. コメント修正の場合は対話的にコメントを改善
+5. コメント修正の場合：
+   ```
+   修正内容を入力してください（複数行可、終了は空行）：
+   ```
+   ユーザーが修正内容を入力後：
+   ```
+   ラベルを選択してください：
+   must / imo / ask / nits / suggestion
+   
+   入力: 
+   ```
 6. ユーザーの回答を待って次のブロックへ
 
 ## ステップ5: レビュー完了
@@ -98,6 +112,8 @@ URLを受け取ったら：
 - エラーが発生してもインラインコメントの追加を断念せず、必ず成功するまで継続する
 - **絶対に`gh pr comment`コマンドを使用しない**（これは通常のPRコメントになってしまうため）
 - GitHub Review APIのみを使用してインラインコメントを追加する
+- 各ステップを必ず順番に実行すること
+- 特に、レビューコメントの投稿前には必ず最終確認を行うこと
 
 ### 手順：
 1. PR番号、オーナー名、リポジトリ名を抽出
