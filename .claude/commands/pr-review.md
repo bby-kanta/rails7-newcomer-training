@@ -93,12 +93,24 @@ URLを受け取ったら：
 
 ユーザーがYと回答した場合、GitHub APIを使用して各コメントを該当するソースコードの行に直接追加する：
 
+**重要な制約**：
+- 必ずインラインコメントを使用する。サマリーコメントは一切追加しない
+- エラーが発生してもインラインコメントの追加を断念せず、必ず成功するまで継続する
+- **絶対に`gh pr comment`コマンドを使用しない**（これは通常のPRコメントになってしまうため）
+- GitHub Review APIのみを使用してインラインコメントを追加する
+
 ### 手順：
 1. PR番号、オーナー名、リポジトリ名を抽出
 2. 最新のコミットSHAを取得
-3. 各レビューコメントをGitHub Review API経由で追加
+3. 各レビューコメントを個別にGitHub Review API経由で追加
 
-### 実装例：
+### 実装の流れ：
+1. まずPR情報を取得して必要な値を抽出
+2. レビューコメントのJSONを正確に作成（エスケープに注意）
+3. GitHub Review APIにPOSTリクエストを送信
+4. エラーが発生した場合は、エラー内容を分析して修正し、再試行
+
+### 正しいAPI呼び出し例：
 ```bash
 # PR情報を取得
 PR_INFO=$(gh pr view [PR_URL] --json number,headRefOid,headRepository)
@@ -106,41 +118,42 @@ PR_NUMBER=$(echo $PR_INFO | jq -r '.number')
 COMMIT_SHA=$(echo $PR_INFO | jq -r '.headRefOid')
 REPO=$(echo $PR_INFO | jq -r '.headRepository.name')
 
-# リポジトリオーナー情報を取得（headRepositoryからは取得できない場合があるため）
+# リポジトリオーナー情報を取得
 OWNER=$(gh repo view [OWNER/REPO] --json owner --jq '.owner.login')
 
-# 一時的なJSONファイルを作成してインラインコメント付きのレビューを作成
-cat > /tmp/review_comment.json <<EOF
+# JSONファイルを作成（エスケープ問題を回避）
+cat > /tmp/review.json << EOF
 {
-  "body": "レビュー完了",
+  "body": "",
   "event": "COMMENT",
   "commit_id": "$COMMIT_SHA",
   "comments": [
     {
       "path": "ファイルパス",
       "line": 行番号,
-      "body": "![ラベル](https://img.shields.io/badge/review-ラベル-色.svg)\n\nコメント内容"
+      "body": "![ラベル](https://img.shields.io/badge/review-ラベル-色.svg)\\n\\nコメント内容"
     }
   ]
 }
 EOF
 
-# GitHub APIを呼び出し
-gh api \
-  --method POST \
+# APIリクエストを送信
+curl -L \
+  -X POST \
   -H "Accept: application/vnd.github+json" \
-  /repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews \
-  --input /tmp/review_comment.json
-
-# 一時ファイルを削除
-rm /tmp/review_comment.json
+  -H "Authorization: Bearer $(gh auth token)" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  -H "Content-Type: application/json" \
+  https://api.github.com/repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews \
+  -d @/tmp/review.json
 ```
 
-**重要**: 
-- `path`: Gitリポジトリのルートからのファイルパス
-- `line`: 変更された行の番号（diffの+行）
-- `body`: レビューコメントの内容（ラベル画像 + コメント内容）
-- 複数のコメントを一度のAPI呼び出しで追加可能
+**重要なポイント**:
+- `body`: 空文字列にする（サマリーコメントを避けるため）
+- `path`: Gitリポジトリのルートからの相対パス（例: "app/controllers/favorites_controller.rb"）
+- `line`: 変更された行の番号（diffで+が付いている行の実際の行番号）
+- `body`内の改行: `\\n`でエスケープする
+- JSONはファイルに書き出してから送信（エスケープ問題を回避）
 
 ### レビューラベル対応表：
 | ラベル | 意味 | 色 | URL |
@@ -151,17 +164,18 @@ rm /tmp/review_comment.json
 | nits | 細かい指摘 | green | `https://img.shields.io/badge/review-nits-green.svg` |
 | suggestion | 提案 | blue | `https://img.shields.io/badge/review-suggestion-blue.svg` |
 
-### 実際の実行手順：
-1. PR URLから`owner/repo`形式を抽出
-2. レビューコメントの配列を作成
-3. 一時JSONファイルに書き出し
-4. GitHub APIを呼び出し
-5. 結果を確認し、成功/失敗を報告
-
 ### エラー対処：
-- JSON形式エラーの場合：一時ファイルを使用してJSON構文を確認
+- JSON形式エラーの場合：
+  - JSONファイルの内容を確認（`cat /tmp/review.json | jq .`）
+  - 特殊文字のエスケープを確認
+  - 改行は`\\n`でエスケープ
 - 権限エラーの場合：`gh auth status`でトークンの権限を確認
-- 行番号エラーの場合：diffの実際の行番号と一致しているか確認
+- 行番号エラーの場合：
+  - diffの実際の行番号と一致しているか確認
+  - 削除された行ではなく、追加または変更された行の番号を使用
+- **絶対に行わないこと**：
+  - `gh pr comment`への切り替え（通常のコメントになる）
+  - エラー時の妥協
 
 ---
 
