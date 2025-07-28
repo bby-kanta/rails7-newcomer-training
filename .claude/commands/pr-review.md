@@ -11,12 +11,12 @@ description: GitHub PRを1ブロックずつ対話的にレビューします
 
 まず、ユーザーに以下のメッセージを表示してPR URLの入力を求めてください：
 
-```
-GitHub PRレビューを開始します。
-レビューしたいPRのURLを入力してください。
-
-例: https://github.com/owner/repo/pull/123
-```
+    ```
+    GitHub PRレビューを開始します。
+    レビューしたいPRのURLを入力してください。
+    
+    例: https://github.com/owner/repo/pull/123
+    ```
 
 ## ステップ2: PR情報の取得と分析
 
@@ -30,13 +30,13 @@ URLを受け取ったら：
 
 要約した目的を以下の形式でユーザーに提示：
 
-```
-【PRの目的】
-[要約した内容]
-
-この理解で正しいですか？修正が必要な場合は修正内容を教えてください。
-正しい場合は「OK」と入力してください。
-```
+    ```
+    【PRの目的】
+    [要約した内容]
+    
+    この理解で正しいですか？修正が必要な場合は修正内容を教えてください。
+    正しい場合は「OK」と入力してください。
+    ```
 
 ## ステップ4: ブロック単位のレビュー
 
@@ -46,63 +46,65 @@ URLを受け取ったら：
 2. 目的に照らしてレビューコメントを提供
 3. 必要に応じてレビューコメント案を作成
 4. ユーザーに確認を求める：
-   ```
-   このブロックのレビュー結果：[問題なし/要レビューコメント]
-   
-   [問題点の説明]
-   
-   以下のレビューコメント案を作成しました：
-   「[作成者向けのレビューコメント案]」
-   
-   コメントのラベル：
-   - must: 必須修正項目 ![must](https://img.shields.io/badge/review-must-red.svg)
-   - imo: 個人的意見 ![imo](https://img.shields.io/badge/review-imo-orange.svg) 
-   - ask: 質問 ![ask](https://img.shields.io/badge/review-ask-blue.svg)
-   - nits: 細かい指摘 ![nits](https://img.shields.io/badge/review-nits-green.svg)
-   - suggestion: 提案 ![suggestion](https://img.shields.io/badge/review-suggestion-blue.svg)
-   
-   このコメントで良いですか？
-   
-   次のいずれかを入力してください：
-   - must / imo / ask / nits / suggestion → 該当ラベルでレビューに追加
-   - skip → コメントなしで次へ
-   - edit → コメント内容を修正
-   
-   入力: 
-   ```
+
+    ```
+    このブロックのレビュー結果：[問題なし/要レビューコメント]
+    
+    [問題点の説明]
+    
+    以下のレビューコメント案を作成しました：
+    「[作成者向けのレビューコメント案]」
+    
+    コメントのラベル：
+    - must: 必須修正項目 ![must](https://img.shields.io/badge/review-must-red.svg)
+    - imo: 個人的意見 ![imo](https://img.shields.io/badge/review-imo-orange.svg) 
+    - ask: 質問 ![ask](https://img.shields.io/badge/review-ask-blue.svg)
+    - nits: 細かい指摘 ![nits](https://img.shields.io/badge/review-nits-green.svg)
+    - suggestion: 提案 ![suggestion](https://img.shields.io/badge/review-suggestion-blue.svg)
+    
+    このコメントで良いですか？
+    
+    次のいずれかを入力してください：
+    - must / imo / ask / nits / suggestion → 該当ラベルでレビューに追加
+    - skip → コメントなしで次へ
+    - edit → コメント内容を修正
+    
+    入力: 
+    ```
 
 5. コメント修正の場合：
-   ```
-   修正内容を入力してください（複数行可、終了は空行）：
-   ```
+    ```
+    修正内容を入力してください（複数行可、終了は空行）：
+    ```
+
    ユーザーが修正内容を入力後：
-   ```
-   ラベルを選択してください：
-   must / imo / ask / nits / suggestion
-   
-   入力: 
-   ```
+    ```
+    ラベルを選択してください：
+    must / imo / ask / nits / suggestion
+    
+    入力: 
+    ```
 6. ユーザーの回答を待って次のブロックへ
 
 ## ステップ5: レビュー完了
 
 すべてのブロックをレビューしたら：
 
-```
-レビュー終了です。お疲れさまでした！
-
-レビュー結果サマリー：
-- 総ブロック数: [数]
-- 問題なし: [数]  
-- レビューコメント追加: [数]
-
-レビューコメント一覧：
-[ファイル名:行番号] ![ラベル](badgeURL) コメント内容
-[ファイル名:行番号] ![ラベル](badgeURL) コメント内容
-...
-
-これらのコメントをGitHub PRに追加しますか？（Y/N）
-```
+    ```
+    レビュー終了です。お疲れさまでした！
+    
+    レビュー結果サマリー：
+    - 総ブロック数: [数]
+    - 問題なし: [数]  
+    - レビューコメント追加: [数]
+    
+    レビューコメント一覧：
+    [ファイル名:行番号] ![ラベル](badgeURL) コメント内容
+    [ファイル名:行番号] ![ラベル](badgeURL) コメント内容
+    ...
+    
+    これらのコメントをGitHub PRに追加しますか？（Y/N）
+    ```
 
 ## ステップ6: GitHub PRへのインラインコメント追加
 
@@ -126,32 +128,32 @@ URLを受け取ったら：
 3. 最後に MCP `mcp__github__submit_pending_pull_request_review` でレビューを送信
 
 ### MCP APIを使用したレビューコメント追加の例：
-```
-# 1. レビューを作成
-mcp__github__create_pending_pull_request_review:
-  owner: [OWNER]
-  repo: [REPO]
-  pullNumber: [PR_NUMBER]
-  commitID: [COMMIT_SHA] (オプション)
-
-# 2. 各コメントを追加
-mcp__github__add_comment_to_pending_review:
-  owner: [OWNER]
-  repo: [REPO]
-  pullNumber: [PR_NUMBER]
-  path: "ファイルパス"
-  line: 行番号
-  body: "![ラベル](https://img.shields.io/badge/review-ラベル-色.svg)\n\nコメント内容"
-  subjectType: "LINE"
-
-# 3. レビューを送信
-mcp__github__submit_pending_pull_request_review:
-  owner: [OWNER]
-  repo: [REPO]
-  pullNumber: [PR_NUMBER]
-  event: "COMMENT"
-  body: "" (サマリーコメントを避けるため空文字列)
-```
+    ```
+    # 1. レビューを作成
+    mcp__github__create_pending_pull_request_review:
+      owner: [OWNER]
+      repo: [REPO]
+      pullNumber: [PR_NUMBER]
+      commitID: [COMMIT_SHA] (オプション)
+    
+    # 2. 各コメントを追加
+    mcp__github__add_comment_to_pending_review:
+      owner: [OWNER]
+      repo: [REPO]
+      pullNumber: [PR_NUMBER]
+      path: "ファイルパス"
+      line: 行番号
+      body: "![ラベル](https://img.shields.io/badge/review-ラベル-色.svg)\n\nコメント内容"
+      subjectType: "LINE"
+    
+    # 3. レビューを送信
+    mcp__github__submit_pending_pull_request_review:
+      owner: [OWNER]
+      repo: [REPO]
+      pullNumber: [PR_NUMBER]
+      event: "COMMENT"
+      body: "" (サマリーコメントを避けるため空文字列)
+    ```
 
 **重要なポイント**:
 - `path`: Gitリポジトリのルートからの相対パス（例: "app/controllers/favorites_controller.rb"）
