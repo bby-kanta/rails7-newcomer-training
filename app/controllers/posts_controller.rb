@@ -12,6 +12,8 @@ class PostsController < ApplicationController
     def show
         @post = Post.find(params[:id])
 
+        raise StandardError, "Post not found" unless @post
+
         @users_favorite = User.find(Favorite.where(post_id: @post.id).pluck(:user_id))
         @users_retweet = User.find(Retweet.where(post_id: @post.id).pluck(:user_id))
     end
