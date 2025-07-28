@@ -1,0 +1,7 @@
+<% if current_user != user %>
+  <% if current_user.following?(user) %>
+    <%= link_to "フォロー外す", relationships_path(params: {user_id: user.id}), data: { "turbo-method": :delete }%>
+  <% else %>
+    <%= link_to "フォローする", relationships_path(params: {user_id: user.id}), data: { "turbo-method": :post }%>
+  <% end %>
+<% end %>

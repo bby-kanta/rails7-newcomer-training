@@ -1,0 +1,12 @@
+<% users.each do |user| %>
+    &ensp;
+    <div class="buttonArray">
+        <%= user.id %>
+        <%= user.email %>
+        &ensp;
+        <td>フォロー数: <%= user.followings.count %> <%= link_to 'フォロー一覧',  followings_path(user.id), class: "btn_06"%></td>
+        <td>フォロワー数: <%= user.followers.count %> <%= link_to 'フォロワー一覧',  followers_path(user.id), class: "btn_06"%></td>
+        <td><%= render "/relationships/btn", user: user%></td>
+        <%= link_to 'ユーザ詳細',  user_path(user.id), class: "btn_06" %>
+    </div>
+<% end %>
