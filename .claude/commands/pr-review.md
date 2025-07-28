@@ -21,9 +21,10 @@ GitHub PRレビューを開始します。
 ## ステップ2: PR情報の取得と分析
 
 URLを受け取ったら：
-1. `gh pr view [URL] --json title,body,state,author,commits` でPR情報を取得
-2. `gh pr diff [URL]` で差分を取得
-3. PR概要、コミットメッセージ、差分内容からPRの意図を要約
+1. URLからowner, repo, pullNumberを抽出
+2. MCP `mcp__github__get_pull_request` でPR情報を取得
+3. MCP `mcp__github__get_pull_request_diff` で差分を取得
+4. PR概要、コミットメッセージ、差分内容からPRの意図を要約
 
 ## ステップ3: 目的の確認
 
@@ -105,75 +106,59 @@ URLを受け取ったら：
 
 ## ステップ6: GitHub PRへのインラインコメント追加
 
-ユーザーがYと回答した場合、GitHub APIを使用して各コメントを該当するソースコードの行に直接追加する：
+ユーザーがYと回答した場合、GitHub MCP APIを使用して各コメントを該当するソースコードの行に直接追加する：
 
 **重要な制約**：
 - 必ずインラインコメントを使用する。サマリーコメントは一切追加しない
 - エラーが発生してもインラインコメントの追加を断念せず、必ず成功するまで継続する
-- **絶対に`gh pr comment`コマンドを使用しない**（これは通常のPRコメントになってしまうため）
-- GitHub Review APIのみを使用してインラインコメントを追加する
+- GitHub MCP Review APIのみを使用してインラインコメントを追加する
 - 各ステップを必ず順番に実行すること
 - 特に、レビューコメントの投稿前には必ず最終確認を行うこと
 
 ### 手順：
-1. PR番号、オーナー名、リポジトリ名を抽出
-2. 最新のコミットSHAを取得
-3. 各レビューコメントを個別にGitHub Review API経由で追加
+1. PR URLからowner, repo, pullNumberを抽出（既に取得済み）
+2. MCP `mcp__github__get_pull_request` でPR詳細情報（最新コミットSHA含む）を取得
+3. MCP API経由でレビューを作成し、コメントを追加
 
 ### 実装の流れ：
-1. まずPR情報を取得して必要な値を抽出
-2. レビューコメントのJSONをWriteツールで作成：
-   - bashのヒアドキュメント（cat > file << EOF）は使用しない
-   - Writeツールで直接JSONオブジェクトを書き込む
-   - 改行は`\n`で表現（`\\n`ではない）
-3. 作成したJSONを`jq .`で検証
-4. GitHub Review APIにPOSTリクエストを送信
-5. エラーが発生した場合は、エラー内容を分析して修正し、再試行
+1. MCP `mcp__github__create_pending_pull_request_review` でレビューを作成
+2. 各コメントに対して MCP `mcp__github__add_comment_to_pending_review` でコメントを追加
+3. 最後に MCP `mcp__github__submit_pending_pull_request_review` でレビューを送信
 
-### 正しいAPI呼び出し例：
-```bash
-# PR情報を取得
-PR_INFO=$(gh pr view [PR_URL] --json number,headRefOid,headRepository)
-PR_NUMBER=$(echo $PR_INFO | jq -r '.number')
-COMMIT_SHA=$(echo $PR_INFO | jq -r '.headRefOid')
-REPO=$(echo $PR_INFO | jq -r '.headRepository.name')
+### MCP APIを使用したレビューコメント追加の例：
+```
+# 1. レビューを作成
+mcp__github__create_pending_pull_request_review:
+  owner: [OWNER]
+  repo: [REPO]
+  pullNumber: [PR_NUMBER]
+  commitID: [COMMIT_SHA] (オプション)
 
-# リポジトリオーナー情報を取得
-OWNER=$(gh repo view [OWNER/REPO] --json owner --jq '.owner.login')
+# 2. 各コメントを追加
+mcp__github__add_comment_to_pending_review:
+  owner: [OWNER]
+  repo: [REPO]
+  pullNumber: [PR_NUMBER]
+  path: "ファイルパス"
+  line: 行番号
+  body: "![ラベル](https://img.shields.io/badge/review-ラベル-色.svg)\n\nコメント内容"
+  subjectType: "LINE"
 
-# 重要: JSONファイルの作成にはWriteツールを使用すること（エスケープ問題を回避）
-# 以下のようなJSON構造を/tmp/review.jsonに書き込む：
-{
-  "body": "",
-  "event": "COMMENT",
-  "commit_id": "[COMMIT_SHA]",
-  "comments": [
-    {
-      "path": "ファイルパス",
-      "line": 行番号,
-      "body": "![ラベル](https://img.shields.io/badge/review-ラベル-色.svg)\n\nコメント内容"
-    }
-  ]
-}
-
-# APIリクエストを送信
-curl -L \
-  -X POST \
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer $(gh auth token)" \
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  -H "Content-Type: application/json" \
-  https://api.github.com/repos/$OWNER/$REPO/pulls/$PR_NUMBER/reviews \
-  -d @/tmp/review.json
+# 3. レビューを送信
+mcp__github__submit_pending_pull_request_review:
+  owner: [OWNER]
+  repo: [REPO]
+  pullNumber: [PR_NUMBER]
+  event: "COMMENT"
+  body: "" (サマリーコメントを避けるため空文字列)
 ```
 
 **重要なポイント**:
-- `body`: 空文字列にする（サマリーコメントを避けるため）
 - `path`: Gitリポジトリのルートからの相対パス（例: "app/controllers/favorites_controller.rb"）
 - `line`: 変更された行の番号（diffで+が付いている行の実際の行番号）
-- `body`内の改行: `\n`を使用（Writeツール使用時は通常の改行として扱われる）
-- **JSONファイルの作成には必ずWriteツールを使用**（bashのヒアドキュメントは避ける）
-- JSONの検証には`jq .`を使用してパースエラーがないか確認
+- `body`内の改行: `\n`を使用
+- `subjectType`: "LINE"を指定してインラインコメントにする
+- `event`: "COMMENT"を使用（"APPROVE"や"REQUEST_CHANGES"ではない）
 
 ### レビューラベル対応表：
 | ラベル | 意味 | 色 | URL |
@@ -185,16 +170,15 @@ curl -L \
 | suggestion | 提案 | blue | `https://img.shields.io/badge/review-suggestion-blue.svg` |
 
 ### エラー対処：
-- JSON形式エラーの場合：
-  - JSONファイルの内容を確認（`cat /tmp/review.json | jq .`）
-  - 特殊文字のエスケープを確認
-  - 改行は`\\n`でエスケープ
-- 権限エラーの場合：`gh auth status`でトークンの権限を確認
+- API呼び出しエラーの場合：
+  - MCP APIのレスポンスを確認
+  - 必須パラメータがすべて正しく設定されているか確認
+- 権限エラーの場合：GitHub MCPサーバーの権限設定を確認
 - 行番号エラーの場合：
   - diffの実際の行番号と一致しているか確認
   - 削除された行ではなく、追加または変更された行の番号を使用
 - **絶対に行わないこと**：
-  - `gh pr comment`への切り替え（通常のコメントになる）
+  - 通常のPRコメント（`mcp__github__add_issue_comment`）への切り替え
   - エラー時の妥協
 
 ---
